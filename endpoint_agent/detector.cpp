@@ -1,28 +1,36 @@
 #include "detector.h"
 #include <iostream>
+#include <QDebug>
 
 
 Detector::Detector()
 {
-
+   m_sourceSignature["fapolicyd"].push_back("dec=deny_log");
+   m_sourceSignature["firewalld"].push_back("filter_IN_drop_DROP");
+   m_sourceSignature["usbguard"].push_back("block");
 }
 
-int Detector::checkData(std::string& data)
+int Detector::checkData(std::string& dataStr, std::string source)
 {
-    for (auto& e : keyword)
+    for (auto& sig : m_sourceSignature[source])
     {
-        keywordStream << e;
+        auto detection = dataStr.find( sig );
+        if( detection != std::string::npos )
+        {
+                std::cout << dataStr.substr(detection, sig.length()) << std::endl
+                          << dataStr << std::endl;
 
-
+        }
     }
-    auto it = std::find_first_of( data.begin(), data.end(),
-                                keywordStream.str().begin(),keywordStream.str().end());
 
-    if(it != data.end() )
-    {
-        std::cout << *it << " found!" << std::endl;
-        return 1;
-    }
 
     return 0;
+}
+
+void Detector::updateSignature(std::vector<std::string> sig, std::string source)
+{
+    for (auto& e : sig)
+    {
+        m_sourceSignature[ source ].push_back(e);
+    }
 }

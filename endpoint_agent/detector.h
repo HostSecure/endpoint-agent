@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <map>
 /// Purpose:
 /// Detect anomalies from parsed log files
 /// receives data from Parser class
@@ -13,15 +14,14 @@ class Detector : public QObject
 public:
     Detector();
 
-    int checkData(std::string& data);
-    void checkDict();
+    int checkData(std::string &dataStr, std::string source);
+    void updateSignature(std::vector<std::string> sig, std::string source);
     void HandleAnomaly();
 
 
 private:
 
-    std::vector< std::string > keyword {"drop", "block", "reject", "unauthorized"};
-    std::stringstream keywordStream;
+    std::map <std::string, std::vector<std::string> > m_sourceSignature;
 
 };
 

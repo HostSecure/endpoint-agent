@@ -12,26 +12,23 @@ namespace
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
 
-    int argLimit;
     std::string exec_name = argv[0];
-    std::vector< std::string > input_args;
-    if ( argc > 1 )
+    std::string input_arg;
+    if ( argc == 2 )
     {
-
-        argc > ARGC_LIMIT ?  argLimit = ARGC_LIMIT : argLimit = argc ;
-        input_args.assign(argv + 1, argv + argLimit);
-        Parser parser(input_args);
-        parser.handleSources();
+        input_arg = argv[1];
+        Parser parser(input_arg);
+        parser.readLogSource();
+        std::cout << "done parsing" << std::endl;
     }
 
     else
     {
-        std::cout << "No args passed to " << exec_name << std::endl;
+        std::cout << "No arg passed to " << exec_name << std::endl;
         return 0;
     }
 
 
-    return a.exec();
+    return 0;
 }

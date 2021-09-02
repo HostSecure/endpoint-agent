@@ -3,6 +3,7 @@
 #include <QObject>
 #include <vector>
 #include <string>
+#include <map>
 
 #include "detector.h"
 
@@ -15,16 +16,19 @@ class Parser : public QObject
 {
     Q_OBJECT
 public:
-    explicit Parser(std::vector<std::string>& buf , QObject *parent = nullptr);
-    void handleSources();
-    void readSources();
+    explicit Parser(std::string &filepath , QObject *parent = nullptr);
+    void handleSources(std::string filePath);
+    void readLogSource();
+
 
 
 private:
-    std::vector<std::string> m_SourceBuf;
-    std::vector<unsigned int> m_LineCount;
+
     int m_SourceCount;
-    Detector DataHandler;
+    Detector m_DataHandler;
+    std::map <int, std::string> m_sourceName;
+    std::map <std::string, std::string> m_sourcePath;
+    std::map <std::string, uint64_t> m_sourceOffset;
 
 
 signals:
