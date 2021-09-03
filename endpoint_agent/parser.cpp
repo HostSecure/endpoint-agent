@@ -15,12 +15,12 @@ int LINE_LIMIT = 500000;
 Parser::Parser(std::string& filepath, QObject *parent) : QObject(parent)
 {
 
-    handleSources(filepath);
+    initializeSources(filepath);
 
 
 }
 
-void Parser::handleSources(std::string filePath)
+void Parser::initializeSources(std::string filePath)
 {
     std::ifstream ifsStream;
     std::string line;
@@ -59,10 +59,8 @@ void Parser::handleSources(std::string filePath)
 
 void Parser::readLogSource()
 {
-    std::stringstream dataStream;
     std::ifstream ifsStream;
-    std::string line;
-    qDebug() << dataStream.str().max_size();
+    std::string rawData;
 
 
     for( int i = 0; i < m_sourceName.size(); ++i )
@@ -74,11 +72,13 @@ void Parser::readLogSource()
         if( ifsStream.is_open() )
 
         {
-            while( std::getline(ifsStream , line ))
+            while( std::getline(ifsStream , rawData ))
             {
-                //dataStream << line;
-                m_DataHandler.checkData(line, m_sourceName[ i ]);
-                ++ lineCount;
+                if(lineCount >= m_sourceOffset[ m_sourceName[ i ] ])
+                {
+                   // std::cout << "scanning new data from line " << lineCount << std::endl;
+                    m_DataHandler.scan(rawData, m_sourceName[ i ]);
+                }
 
                 if(lineCount > LINE_LIMIT)
                 {
@@ -86,6 +86,7 @@ void Parser::readLogSource()
                     break;
 
                 }
+                ++ lineCount;
 
             }
             ifsStream.close();

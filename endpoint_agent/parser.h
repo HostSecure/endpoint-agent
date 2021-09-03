@@ -17,7 +17,7 @@ class Parser : public QObject
     Q_OBJECT
 public:
     explicit Parser(std::string &filepath , QObject *parent = nullptr);
-    void handleSources(std::string filePath);
+    void initializeSources(std::string filePath);
     void readLogSource();
 
 

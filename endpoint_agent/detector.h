@@ -14,7 +14,7 @@ class Detector : public QObject
 public:
     Detector();
 
-    int checkData(std::string &dataStr, std::string source);
+    int scan(std::string &dataStr, std::string source);
     void updateSignature(std::vector<std::string> sig, std::string source);
     void HandleAnomaly();
 

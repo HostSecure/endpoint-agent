@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <parser.h>
+#include <unistd.h>
 
 namespace
 {
@@ -18,9 +19,13 @@ int main(int argc, char *argv[])
     if ( argc == 2 )
     {
         input_arg = argv[1];
-        Parser parser(input_arg);
-        parser.readLogSource();
-        std::cout << "done parsing" << std::endl;
+        while (true)
+        {
+            Parser parser(input_arg);
+            parser.readLogSource();
+            std::cout << "done parsing" << std::endl;
+            sleep(60);
+        }
     }
 
     else

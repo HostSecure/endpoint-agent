@@ -7,10 +7,11 @@ Detector::Detector()
 {
    m_sourceSignature["fapolicyd"].push_back("dec=deny_log");
    m_sourceSignature["firewalld"].push_back("filter_IN_drop_DROP");
-   m_sourceSignature["usbguard"].push_back("block");
+   m_sourceSignature["firewalld"].push_back("filter_IN_reject_REJECT");
+   m_sourceSignature["usbguard"].push_back("usbguard-daemon");
 }
 
-int Detector::checkData(std::string& dataStr, std::string source)
+int Detector::scan(std::string& dataStr, std::string source)
 {
     for (auto& sig : m_sourceSignature[source])
     {
