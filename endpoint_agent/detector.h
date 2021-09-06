@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <map>
+
 /// Purpose:
 /// Detect anomalies from parsed log files
 /// receives data from Parser class
@@ -22,6 +23,7 @@ public:
 private:
 
     std::map <std::string, std::vector<std::string> > m_sourceSignature;
+
 
 };
 

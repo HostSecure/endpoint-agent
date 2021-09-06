@@ -5,10 +5,11 @@
 
 Detector::Detector()
 {
-   m_sourceSignature["fapolicyd"].push_back("dec=deny_log");
-   m_sourceSignature["firewalld"].push_back("filter_IN_drop_DROP");
-   m_sourceSignature["firewalld"].push_back("filter_IN_reject_REJECT");
-   m_sourceSignature["usbguard"].push_back("usbguard-daemon");
+    m_sourceSignature["fapolicyd"].push_back("dec=deny_log");
+    m_sourceSignature["firewalld"].push_back("filter_IN_drop_DROP");
+    m_sourceSignature["firewalld"].push_back("filter_IN_reject_REJECT");
+    m_sourceSignature["usbguard"].push_back("usbguard-daemon");
+
 }
 
 int Detector::scan(std::string& dataStr, std::string source)
@@ -35,3 +36,4 @@ void Detector::updateSignature(std::vector<std::string> sig, std::string source)
         m_sourceSignature[ source ].push_back(e);
     }
 }
+

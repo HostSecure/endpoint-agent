@@ -1,4 +1,5 @@
 QT -= gui
+QT += dbus
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -8,6 +9,7 @@ CONFIG -= app_bundle
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        USBServiceHandler.cpp \
         detector.cpp \
         main.cpp \
         parser.cpp \
@@ -19,6 +21,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    USBServiceHandler.h \
     detector.h \
     parser.h \
     rulehandler.h
+
+DISTFILES += \
+    ../../../usbguard/src/DBus/DBusInterface.xml
