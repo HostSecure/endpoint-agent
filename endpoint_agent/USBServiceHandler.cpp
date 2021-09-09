@@ -11,6 +11,8 @@ USBServiceHandler::USBServiceHandler(QObject *parent) : QObject(parent)
 
     ifaceUSBGuardDevices = new QDBusInterface(DBUS_SERVICE_NAME, DBUS_DEVICES_PATH, DBUS_DEVICES_INTERFACE,
                                                   QDBusConnection::systemBus(), this);
+    ifaceUSBGuardPolicy = new QDBusInterface(DBUS_SERVICE_NAME, DBUS_POLICY_PATH, DBUS_POLICY_INTERFACE,
+                                                  QDBusConnection::systemBus(), this);
 
     QDBusConnection system = QDBusConnection::systemBus();
     if(!system.isConnected())
@@ -33,20 +35,38 @@ USBServiceHandler::USBServiceHandler(QObject *parent) : QObject(parent)
         qDebug() << "connection1 failed";
         qPrintable(QDBusConnection::systemBus().lastError().message());
     }
+
 }
 
-void USBServiceHandler::handlePropertyParameterChanged(QString name, QString value_old, QString value_new)
+void USBServiceHandler::listRules(QString label)
+{
+    QDBusMessage ruleset = ifaceUSBGuardPolicy->call("listRules",label);
+
+    qDebug() << ruleset; //a(us)
+
+}
+
+void USBServiceHandler::appendRule(QString rule, uint parent_id, bool temporary)
 {
 
-    qDebug() << "property";
+    QDBusMessage id = ifaceUSBGuardPolicy->call("appendRule",rule,parent_id,temporary);
+    qDebug() << id;
 }
 
-void USBServiceHandler::handleExceptionMessage(QString context, QString object, QString reason)
+void USBServiceHandler::removeRule(uint id)
 {
 
-    qDebug() << "exception";
+    ifaceUSBGuardDevices->call("removeRule",id);
 }
 
+void USBServiceHandler::listDevices(QString query)
+{
+    QDBusMessage devices = ifaceUSBGuardDevices->call("listDevices",query);
+    qDebug() << devices; //a(us)
+
+}
+
+///SLOTS
 void USBServiceHandler::handleDevicePresenceChanged(uint id, uint event, uint target, QString device_rule, QMap<QString, QString>  attributes)
 {
     qDebug() << "presence";
@@ -60,8 +80,3 @@ void USBServiceHandler::handleDevicePolicyChanged(uint id, uint target_old, uint
 
 }
 
-void USBServiceHandler::handleDevicePolicyApplied(uint id, uint target_new, uint device_rule, uint rule_id, QMap<QString, QString> attributes)
-{
-    qDebug() << "applied";
-
-}

@@ -22,14 +22,14 @@ class USBServiceHandler : public QObject
 public:
     explicit USBServiceHandler(QObject *parent = nullptr);
 
-private:
+//    QDBusInterface *ifaceUSBGuardRoot;
+    QDBusInterface *ifaceUSBGuardPolicy;
     QDBusInterface *ifaceUSBGuardDevices;
 
 
-signals:
     //USBGUARD_ROOT
-    void getParameter(QString name); // out s value
-    void setParameter(QString name); // out s previous_value
+//    void getParameter(QString name); // out s value
+//    void setParameter(QString name); // out s previous_value
     //USBGUARD_POLICY
     void listRules(QString label); // out a(us) ruleset
     void appendRule(QString rule, uint parent_id, bool temporary); // out u id
@@ -41,8 +41,9 @@ signals:
 
 public slots:
     //USBGUARD_ROOT
-    void handlePropertyParameterChanged(QString name, QString value_old, QString value_new);
-    void handleExceptionMessage(QString context, QString object, QString reason);
+//    void handlePropertyParameterChanged(QString name, QString value_old, QString value_new);
+//    void handleExceptionMessage(QString context, QString object, QString reason);
+// TODO
     //USBGUARD_POLICY
 
 
@@ -51,8 +52,9 @@ public slots:
                                QMap<QString, QString> attributes);
     void handleDevicePolicyChanged(uint id, uint target_old, uint target_new, QString device_rule, uint rule_id,
                              QMap<QString, QString> attributes);
-    void handleDevicePolicyApplied(uint id, uint target_new, uint device_rule, uint rule_id,
-                             QMap < QString, QString  > attributes);
+//    void handleDevicePolicyApplied(uint id, uint target_new, uint device_rule, uint rule_id,
+//                             QMap < QString, QString  > attributes);
+// TODO
 
 
 

@@ -18,20 +18,15 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     USBServiceHandler sh;
-
+    sh.listRules("");
+    //sh.appendRule("allow id *:* with-interface 03:00:00",1,0);
+    //sh.listDevices("block");
 
     std::string exec_name = argv[0];
     std::string input_arg;
     if ( argc == 2 )
     {
         input_arg = argv[1];
-//        while (true)
-//        {
-//            Parser parser(input_arg);
-//            parser.readLogSource();
-//            std::cout << "done parsing" << std::endl;
-//            sleep(1);
-//        }
     }
 
     else
