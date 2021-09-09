@@ -67,10 +67,14 @@ void USBServiceHandler::listDevices(QString query)
 }
 
 ///SLOTS
+
+/// Target 0 = allow, 1 = block, 2 = reject, 3 = match, 4 = unknown, 5 = device, 6 = empty, 7 = invalid
+/// Event  0 = alreadyPresent, 1 = Insert, 2 = Update, 3 = Remove
 void USBServiceHandler::handleDevicePresenceChanged(uint id, uint event, uint target, QString device_rule, QMap<QString, QString>  attributes)
 {
     qDebug() << "presence";
     qDebug() << id << " " << event << " " << target << " " << device_rule << " " << attributes;
+
 }
 
 void USBServiceHandler::handleDevicePolicyChanged(uint id, uint target_old, uint target_new, QString device_rule, uint rule_id, QMap<QString, QString> attributes)

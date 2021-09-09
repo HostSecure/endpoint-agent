@@ -1,5 +1,5 @@
 QT -= gui
-QT += dbus
+QT += dbus network
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -15,7 +15,8 @@ SOURCES += \
         detector.cpp \
         main.cpp \
         parser.cpp \
-        rulehandler.cpp
+        rulehandler.cpp \
+        uplinkhandler.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -26,7 +27,8 @@ HEADERS += \
     USBServiceHandler.h \
     detector.h \
     parser.h \
-    rulehandler.h
+    rulehandler.h \
+    uplinkhandler.h
 
 DISTFILES += \
     ../../../usbguard/src/DBus/DBusInterface.xml \
