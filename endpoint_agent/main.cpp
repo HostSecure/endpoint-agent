@@ -15,7 +15,7 @@ namespace
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication app(argc, argv);
+    QCoreApplication a(argc, argv);
 
     USBServiceHandler sh;
 
@@ -25,13 +25,13 @@ int main(int argc, char *argv[])
     if ( argc == 2 )
     {
         input_arg = argv[1];
-//        while (true)
-//        {
+        while (true)
+        {
 //            Parser parser(input_arg);
 //            parser.readLogSource();
 //            std::cout << "done parsing" << std::endl;
-//            sleep(60);
-//        }
+            sleep(1);
+        }
     }
 
     else
@@ -42,5 +42,6 @@ int main(int argc, char *argv[])
 
 
 
-    return 0;
+
+    return a.exec();
 }

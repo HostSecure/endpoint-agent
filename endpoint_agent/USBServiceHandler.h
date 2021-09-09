@@ -2,6 +2,10 @@
 
 #include <QObject>
 #include <QtDBus>
+#include <QMap>
+#include <QString>
+#include <dbusinterface_interface.h>
+
 
 
 class USBServiceHandler : public QObject
@@ -14,6 +18,12 @@ private:
     QDBusInterface *ifaceUSBGuardRoot;
     QDBusInterface *ifaceUSBGuardDevices;
     QDBusInterface *ifaceUSBGuardPolicy;
+
+    org::usbguard::Policy1* usbPolicy;
+    org::usbguard::Devices1* usbDevice;
+    org::usbguard1* usbRoot;
+
+
 signals:
     //USBGUARD_ROOT
     void getParameter(QString name); // out s value
@@ -36,11 +46,11 @@ public slots:
 
     //USBGUARD_DEVICE
     void handleDevicePresenceChanged(uint id, uint event, uint target, QString device_rule,
-                               QList< QMap < QString , QString > > attributes);
+                               QMap<QString, QString> attributes);
     void handleDevicePolicyChanged(uint id, uint target_old, uint target_new, QString device_rule, uint rule_id,
                              QList< QMap < QString, QString > > attributes);
     void handleDevicePolicyApplied(uint id, uint target_new, uint device_rule, uint rule_id,
-                             QList< QMap < QString, QString > > attributes);
+                             QList< QPair < QString, QString > > attributes);
 
 
 
