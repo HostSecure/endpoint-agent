@@ -4,10 +4,18 @@
 #include <QtDBus>
 #include <QMap>
 #include <QString>
-#include <dbusinterface_interface.h>
 
 
-
+namespace
+{
+QString DBUS_SERVICE_NAME  =    "org.usbguard1";
+QString DBUS_ROOT_INTERFACE =   "org.usbguard1";
+QString DBUS_ROOT_PATH      =   "/org/usbguard1";
+QString DBUS_POLICY_INTERFACE=  "org.usbguard.Policy1";
+QString DBUS_POLICY_PATH     =  "/org/usbguard1/Policy";
+QString DBUS_DEVICES_INTERFACE= "org.usbguard.Devices1";
+QString DBUS_DEVICES_PATH     = "/org/usbguard1/Devices";
+}
 class USBServiceHandler : public QObject
 {
     Q_OBJECT
@@ -15,13 +23,7 @@ public:
     explicit USBServiceHandler(QObject *parent = nullptr);
 
 private:
-    QDBusInterface *ifaceUSBGuardRoot;
     QDBusInterface *ifaceUSBGuardDevices;
-    QDBusInterface *ifaceUSBGuardPolicy;
-
-    org::usbguard::Policy1* usbPolicy;
-    org::usbguard::Devices1* usbDevice;
-    org::usbguard1* usbRoot;
 
 
 signals:
@@ -48,9 +50,9 @@ public slots:
     void handleDevicePresenceChanged(uint id, uint event, uint target, QString device_rule,
                                QMap<QString, QString> attributes);
     void handleDevicePolicyChanged(uint id, uint target_old, uint target_new, QString device_rule, uint rule_id,
-                             QList< QMap < QString, QString > > attributes);
+                             QMap<QString, QString> attributes);
     void handleDevicePolicyApplied(uint id, uint target_new, uint device_rule, uint rule_id,
-                             QList< QPair < QString, QString > > attributes);
+                             QMap < QString, QString  > attributes);
 
 
 
