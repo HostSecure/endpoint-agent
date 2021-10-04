@@ -33,3 +33,4 @@
 
 # Pro.tmp file
 .pro.user
+.DS_Store
